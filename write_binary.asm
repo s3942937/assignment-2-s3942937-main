@@ -1,4 +1,159 @@
 .ORIG x3000
+
+LEA R4, NUMBER_TO_CONVERT
+LDR R5, R4, #0
+
+TRAP x29
+
+ST  R0, PLAYERS_X_COORDINATE 
+ST  R1, PLAYERS_Y_COORDINATE 
+ST  R2, PLAYERS_Z_COORDINATE 
+
+AND R6, R6, #0
+ADD R6, R6, #15
+ADD R6, R6, #1
+
+LEA R4, MASK_ARRAY
+
+AND R7, R7, #0
+ADD R7, R7, #1
+ST  R7, Z_OFFSET
+
+.ORIG x3000
+
+LEA R4, NUMBER_TO_CONVERT
+LDR R5, R4, #0
+
+TRAP x29
+
+ST  R0, PLAYERS_X_COORDINATE 
+ST  R1, PLAYERS_Y_COORDINATE 
+ST  R2, PLAYERS_Z_COORDINATE 
+
+AND R6, R6, #0
+ADD R6, R6, #15
+ADD R6, R6, #1
+
+LEA R4, MASK_ARRAY
+
+AND R7, R7, #0
+ADD R7, R7, #1
+ST  R7, Z_OFFSET
+
+LOOP_START
+BRz LOOP_END
+
+LDR R7, R4, #0
+
+AND R7, R5, R7
+
+BRz SET_AIR
+AND R3, R3, #0
+ADD R3, R3, #1
+BR  SET_BLOCK
+SET_AIR
+AND R3, R3, #0
+SET_BLOCK
+LD  R0, PLAYERS_X_COORDINATE        
+LD  R1, PLAYERS_Y_COORDINATE
+LD  R2, PLAYERS_Z_COORDINATE        
+LD  R7, Z_OFFSET        
+
+ADD R2, R2, R7
+
+TRAP x2C         
+ADD R7, R7, #1 
+ST  R7, Z_OFFSET
+
+ADD R4, R4, #1
+
+ADD R6, R6, #-1
+
+BR  LOOP_START
+
+LOOP_END
 HALT
+PLAYERS_X_COORDINATE    .BLKW 1
+PLAYERS_Y_COORDINATE    .BLKW 1
+PLAYERS_Z_COORDINATE    .BLKW 1
+Z_OFFSET    .BLKW 1
+
 NUMBER_TO_CONVERT .FILL #237 ; Note: Please do not change the name of this constant
+
+MASK_ARRAY
+.FILL x0001             
+.FILL x0002             
+.FILL x0004             
+.FILL x0008             
+.FILL x0010             
+.FILL x0020             
+.FILL x0040             
+.FILL x0080             
+.FILL x0100             
+.FILL x0200             
+.FILL x0400             
+.FILL x0800             
+.FILL x1000             
+.FILL x2000             
+.FILL x4000             
+.FILL x8000
+
+.END
+
+LDR R7, R4, #0
+
+AND R7, R5, R7
+
+BRz SET_AIR
+AND R3, R3, #0
+ADD R3, R3, #1
+BR  SET_BLOCK
+SET_AIR
+AND R3, R3, #0
+SET_BLOCK
+LD  R0, PLAYERS_X_COORDINATE        
+LD  R1, PLAYERS_Y_COORDINATE
+LD  R2, PLAYERS_Z_COORDINATE        
+LD  R7, Z_OFFSET        
+
+ADD R2, R2, R7
+
+TRAP x2C         
+ADD R7, R7, #1 
+ST  R7, Z_OFFSET
+
+ADD R4, R4, #1
+
+ADD R6, R6, #-1
+
+BR  LOOP_START
+
+LOOP_END
+HALT
+PLAYERS_X_COORDINATE    .BLKW 1
+PLAYERS_Y_COORDINATE    .BLKW 1
+PLAYERS_Z_COORDINATE    .BLKW 1
+Z_OFFSET    .BLKW 1
+
+
+NUMBER_TO_CONVERT .FILL #237 ; Note: Please do not change the name of this constant
+
+MASK_ARRAY
+.FILL x0001             
+.FILL x0002             
+.FILL x0004             
+.FILL x0008             
+.FILL x0010             
+.FILL x0020             
+.FILL x0040             
+.FILL x0080             
+.FILL x0100             
+.FILL x0200             
+.FILL x0400             
+.FILL x0800             
+.FILL x1000             
+.FILL x2000             
+.FILL x4000             
+.FILL x8000
+
 .END
